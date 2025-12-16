@@ -1,0 +1,93 @@
+General
+    base
+        Creation de la base de donnees: 
+        creation tables:
+            vehicule
+                -id
+                -numero
+            livreur
+                -id
+                -nom
+                -prenom
+            livraison
+                -id
+                -colis
+                -addresse de depart
+                -addresse de destination(zone)
+                -statut
+                -date et heure de livraison
+                -carburant
+                -salaire du chauffeur(frais??)
+            statut
+                -id
+                -type(livré;en attente;annulée)
+            zone
+                -id
+                -nom
+            
+        fonction
+
+        design
+            
+        integration
+            
+//===============================================================
+
+1. Gestion de livraison
+
+    _formulaire pour creer une livraison
+        base    
+
+        fonction
+            creer un model livraison
+                faire une fonction InsertLivraison()
+
+        design
+            form + input:
+                id_colis
+                id_vehicule
+                date de livraison
+                id_livreur/nom
+                addresse_depart(entrepot)
+                nom de zone(addresse_destination)
+                statut(liste deroulante)
+                carburant
+                salaire du chauffeur
+                +buton valider
+        integration
+            creer un controller livraisonController
+                appeler InsertLivraison(), inserer les donnees recuperees dans le form
+
+    _affichage des livraison
+        base
+            insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)
+            
+        fonction
+            getLivraison()
+            getlivreur()
+
+        design
+            Affichage sous forme de tableau avec poids colis
+        integration
+            appeler getLivraison()
+
+//===============================================================
+
+3.  bénéfice par periode (jour,mois ,annee)
+    base
+        creation de vue pour calcul de chaque benefice par periode
+    fonction
+        getBeneficeParJour()
+        getBeneficeParMois()
+        getBeneficeParAnnee()
+    design
+        Affichage sous frome de tableau pour chaque periode
+    integration
+        appel des fonctions : 
+            getBeneficeParJour()
+            getBeneficeParMois()
+            getBeneficeParAnnee()
+
+SELECT SUM(t.recette - t.carburant) as benefice, v.immatricule FROM trajet t JOIN vehicule v ON v.id = t.id_vehicule GROUP BY v.immatricule;
+SELECT SUM(recette - carburant) as benefice, DATE(depart) FROM trajet GROUP BY DATE(depart);
+SELECT MAX(recette) as plus_rentable, DATE(depart) FROM trajet GROUP BY DATE(depart);
