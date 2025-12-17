@@ -89,3 +89,18 @@ INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, a
 ('2024-12-04', 4, 4, 4, 'entrepot', 4, 3, 25000.00),
 ('2024-12-05', 1, 2, 5, 'entrepot', 5, 1, 30000.00);
 
+CREATE OR REPLACE view vue_prix_colis as
+SELECT l.date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
+JOIN exam_livraison l ON l.id_colis = c.id_colis
+CROSS JOIN exam_params_poids p;
+
+
+   CREATE OR REPLACE VIEW vue_benefice_par_jour AS
+SELECT
+    DATE(l.date_livraison) AS jour,
+    SUM(c.chiffre_affaire - r.total) AS benefice
+FROM exam_livraison l
+JOIN prix_colis c ON c.dates = l.date_livraison
+JOIN vue_depenses r ON r.date_livraison = l.date_livraison
+GROUP BY DATE(l.date_livraison);
+}
