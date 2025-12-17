@@ -103,4 +103,3 @@ FROM exam_livraison l
 JOIN prix_colis c ON c.dates = l.date_livraison
 JOIN vue_depenses r ON r.date_livraison = l.date_livraison
 GROUP BY DATE(l.date_livraison);
-}
