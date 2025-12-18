@@ -20,7 +20,7 @@
             <tbody>
             <?php foreach ($benefMois as $b) { ?>
                 <tr>
-                    <td><?= $b['Mois'] ?></td>
+                    <td><?= $b['mois'] ?></td>
                     <td><?= number_format($b['benefice'], 2, ',', ' ') ?> </td>
                 </tr>
             <?php } ?>
