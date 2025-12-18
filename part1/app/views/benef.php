@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th>Mois</th>
+                    <th>Annee</th>
                     <th>Total Bénéfice</th>
                 </tr>
             </thead>
@@ -33,7 +34,7 @@
         <table border = "collapse 1px">
             <thead>
                 <tr>
-                    <th>Jour</th>
+                    <th>Date</th>
                     <th>Total Bénéfice</th>
                 </tr>
             </thead>

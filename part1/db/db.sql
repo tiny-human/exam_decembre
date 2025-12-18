@@ -51,10 +51,10 @@ INSERT INTO exam_vehicule (numero) VALUES
 
 -- 2. Insérer des livreurs (salaire en Ariary)
 INSERT INTO exam_livreur (nom, prenom, salaire_chauffeur) VALUES
-('Rakoto', 'Jean', 650000.00),    
-('Rasoa', 'Marie', 750000.00),     
-('Randria', 'Paul',700000.00),    
-('Rabe', 'Sophie', 900000.00);
+('Rakoto', 'Jean', 10000.00),    
+('Rasoa', 'Marie', 25000.00),     
+('Randria', 'Paul',30000.00),    
+('Rabe', 'Sophie', 15000.00);
 
 -- 3. Insérer des statuts
 INSERT INTO exam_statut (statut) VALUES
@@ -79,7 +79,7 @@ INSERT INTO exam_colis (nom, poids) VALUES
 ('Zebu viande 30kg', 30.0);
 
 -- 6. Insérer paramètres de poids (prix par kg en Ariary)
-INSERT INTO exam_params_poids (prix_par_kg) VALUES (1000.00); 
+INSERT INTO exam_params_poids (prix_par_kg) VALUES (8000.00); 
 
 -- 7. Insérer des livraisons
 INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, adresse_depart, id_zone, id_statut, cout_vehicule) VALUES
@@ -90,21 +90,44 @@ INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, a
 ('2024-12-05', 1, 2, 5, 'entrepot', 5, 1, 30000.00);
 
 CREATE OR REPLACE view vue_prix_colis as
-SELECT l.date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
+SELECT l.date_livraison as date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
 JOIN exam_livraison l ON l.id_colis = c.id_colis
 CROSS JOIN exam_params_poids p;
 
 
-   CREATE OR REPLACE VIEW vue_benefice_par_jour AS
+   CREATE OR REPLACE VIEW v_benefice_par_jour AS
 SELECT
     DATE(l.date_livraison) AS jour,
-    SUM(c.chiffre_affaire - r.total) AS benefice
+    SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
-JOIN prix_colis c ON c.dates = l.date_livraison
-JOIN vue_depenses r ON r.date_livraison = l.date_livraison
+JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
 GROUP BY DATE(l.date_livraison);
+
 CREATE OR REPLACE view v_livraison_detail_cout
 as SELECT  l.id_livraison , l.cout_vehicule , v.salaire_chauffeur FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur;
 
 CREATE OR REPLACE view v_livraison_detail_colis
 as SELECT  l.id_livraison , c.id_colis , c.nom , c.poids  FROM exam_livraison l JOIN exam_colis c on l.id_colis = c.id_colis;
+
+CREATE OR REPLACE view v_livraison_total_cout as  
+SELECT l.id_livraison as livraison , l.date_livraison as date_livraison, SUM(l.cout_vehicule + v.salaire_chauffeur) as cout_revient 
+FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur GROUP BY id_livraison;
+
+CREATE OR REPLACE VIEW v_benefice_par_mois AS
+SELECT
+    MONTHNAME(l.date_livraison) AS mois,
+    SUM(c.chiffre_affaire - r.cout_revient) AS benefice
+FROM exam_livraison l
+JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
+GROUP BY mois;
+
+CREATE OR REPLACE VIEW v_benefice_par_annee AS
+SELECT YEAR(l.date_livraison) AS annee,
+    SUM(c.chiffre_affaire - r.cout_revient) AS benefice
+FROM exam_livraison l
+JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
+GROUP BY annee;
+
