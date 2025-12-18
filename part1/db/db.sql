@@ -103,3 +103,8 @@ FROM exam_livraison l
 JOIN prix_colis c ON c.dates = l.date_livraison
 JOIN vue_depenses r ON r.date_livraison = l.date_livraison
 GROUP BY DATE(l.date_livraison);
+CREATE OR REPLACE view v_livraison_detail_cout
+as SELECT  l.id_livraison , l.cout_vehicule , v.salaire_chauffeur FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur;
+
+CREATE OR REPLACE view v_livraison_detail_colis
+as SELECT  l.id_livraison , c.id_colis , c.nom , c.poids  FROM exam_livraison l JOIN exam_colis c on l.id_colis = c.id_colis;

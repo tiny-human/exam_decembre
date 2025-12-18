@@ -1,9 +1,10 @@
 <?php
 
 namespace app\models;
+
 use PDO;
 
-class Livreur
+class Statut
 {
 
     private $db;
@@ -11,8 +12,9 @@ class Livreur
     {
         $this->db = $db;
     }
-    public function getLivreur(){
-        $stmt = $this->db->prepare("select * from exam_livreur");
+    public function getStatut()
+    {
+        $stmt = $this->db->prepare("select * from exam_statut");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
