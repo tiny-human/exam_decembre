@@ -13,11 +13,12 @@ class Livraison
     }
 
     public function getLivraison() {
-        $sql = "SELECT l.date_livraison AS dates, v.numero AS vehicule,liv.nom AS livreur, z.nom_zone AS zone, s.statut AS statut 
+        $sql = "SELECT l.id_livraison, v.numero AS vehicule,liv.nom AS livreur,c.colis,l.date_livraison AS dates, z.nom_zone AS zone, s.statut AS statut 
         FROM exam_livraison l JOIN exam_vehicule v ON v.id_vehicule = l.id_vehicule 
         JOIN exam_livreur liv ON liv.id_livreur = l.id_livreur 
         JOIN exam_statut s ON s.id_statut = l.id_statut 
-        JOIN exam_zone z ON z.id_zone = l.id_zone CROSS JOIN exam_params_poids p";
+        JOIN exam_zone z ON z.id_zone = l.id_zone 
+        JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison";
         $stmt = $this->db->prepare($sql);  
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,14 +32,28 @@ class Livraison
     }
 
     public function getBeneficeParJour() {
-        $sql = "SELECT * FROM vue_benefice_par_jour";
+        $sql = "SELECT * FROM v_benefice_par_jour";
+        $stmt = $this->db->prepare($sql);  
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getBeneficeParMois() {
+        $sql = "SELECT * FROM v_benefice_par_mois";
+        $stmt = $this->db->prepare($sql);  
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getBeneficeParAnnee() {
+        $sql = "SELECT * FROM v_benefice_par_annee";
         $stmt = $this->db->prepare($sql);  
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getCoutRevient(){
-        $sql = "SELECT id_livraison , sum(cout_vehicule + salaire_chauffeur) as cout_revient FROM v_livraison_detail_cout GROUP BY id_livraison";
+        $sql = "SELECT * FROM v_livraison_total_cout";
         $stmt = $this ->db->prepare($sql);
         $stmt->execute();
         $cout = $stmt->fetchAll(PDO::FETCH_ASSOC);

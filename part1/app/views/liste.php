@@ -13,21 +13,15 @@
             <td>id vehicule</td>
             <td>livreur</td>
             <td>date de la livraison</td>
-            <td>carburant</td>
-            <td>salaire livreur </td>
             <td>statut</td>
         </tr>
         <?php foreach($liste as $l){ ?>
             <tr>
                 <td><?= $l['id_livraison'] ?></td>
-                <td><?= $l['id_colis'] ?></td>
-                <td><?= $l['id_vehicule'] ?></td>
-                <?php foreach($livreur as $liv){ ?>
-                    <td><?= ($l['id_livraison'] = $liv['id_livreur']) ? $liv['nom'] : ""?></td>
-                <?php } ?>
-                <td><?= $l['date'] ?></td>
-                <td><?= $l['carburant'] ?></td>
-                <td><?= $l['salaire'] ?></td>
+                <td><?= $l['colis'] ?></td>
+                <td><?= $l['vehicule'] ?></td>
+                <td><?= $l['livreur'] ?></td>
+                <td><?= $l['dates'] ?></td>
                 <td><?= $l['statut'] ?></td>
             </tr>
         <?php } ?>
