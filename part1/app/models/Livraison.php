@@ -36,10 +36,6 @@ class Livraison
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-}
-
-
-
 
     function getCoutRevient(){
         $sql = "SELECT id_livraison , sum(cout_vehicule + salaire_chauffeur) as cout_revient FROM v_livraison_detail_cout GROUP BY id_livraison";
@@ -63,6 +59,7 @@ class Livraison
             $statut,
             $cout_vehicule
         ]);
-        
     }
 }
+
+
