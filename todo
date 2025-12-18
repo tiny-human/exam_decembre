@@ -99,12 +99,13 @@ General
             (ok)getBeneficeParMois() (par Tsiky)
             (ok)getBeneficeParAnnee() (par Tsiky)
         design
-            (en cours)mettre un filtre pour chaque periode 
+            (ok)mettre un filtre pour chaque periode (par Tsiky)
             (ok)Affichage sous frome de tableau pour chaque periode (par Tsiky)
         integration
             appel des fonctions : 
                 (ok)getBeneficeParJour() 	}
-                (ok)getBeneficeParMois() 	}(dans livraisonController) (par Tsiky) 
+                (ok)getBeneficeParMois() 	}(dans livraisonController avec getBenef()) (par Tsiky) 
                 (ok)getBeneficeParAnnee() 	}
+
 
 
