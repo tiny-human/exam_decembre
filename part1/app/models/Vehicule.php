@@ -1,18 +1,19 @@
 <?php
 
 namespace app\models;
+
 use PDO;
 
-class Livreur
+class Vehicule
 {
-
     private $db;
     public function __construct($db)
     {
         $this->db = $db;
     }
-    public function getLivreur(){
-        $stmt = $this->db->prepare("select * from exam_livreur");
+    public function getVehicules()
+    {
+        $stmt = $this->db->prepare("select * from exam_vehicule");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

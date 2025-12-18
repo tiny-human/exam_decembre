@@ -1,8 +1,11 @@
 <?php
 
 use app\controllers\ApiExampleController;
+use app\controllers\LivraisonController;
+use app\controllers\LivreurController;
 use app\controllers\PanneController;
 use app\controllers\TrajetController;
+use app\controllers\Util;
 use app\middlewares\SecurityHeadersMiddleware;
 use flight\Engine;
 use flight\net\Router;
@@ -30,10 +33,15 @@ $router->group('', function(Router $router) use ($app) {
 	});
 
 	$controller = new LivraisonController();
-	$livreur = new LivreurController();
+	//$livreur = new LivreurController();
 
 	$router->get('/liste', function () use($app, $controller) {
 		$produit = $controller->getLivraison();
+	});
+
+	$router->get('/cout', function () use ($app,$controller){
+		$data = $controller->getCoutRevient();
+		$app->render('revient', ['data'=> $data] );
 	});
 	
 	$router->group('/benef', function() use ($router, $controller) {
@@ -42,9 +50,32 @@ $router->group('', function(Router $router) use ($app) {
 		$router->get('/annee', [$controller, 'getBenefAnnee'] );
 	});
 
-	$router->get('/form', function() use ($app){
-		$app->render('form');
+	$router->get('/form', function() use ($app, $controller) {
+    $controller = new Util();
+    $controller_livraison = new LivreurController();
+    
+    $liste_colis = $controller->getColis();
+    $liste_statut = $controller->getStatut();
+    $liste_zone = $controller->getZone();
+    $liste_vehicule = $controller->getVehicule();
+    $liste_livreur = $controller_livraison->getLivreur();
+    $app->render('form', [
+        'colis' => $liste_colis,
+        'statut' => $liste_statut,
+        'zone' => $liste_zone,
+        'vehicule' => $liste_vehicule,
+        'livreur' => $liste_livreur
+		]);
 	});
+
+
+	$router->post('/insert_livarison',function () use ($controller){
+		$controller =  new LivraisonController();
+		$controller->insererLivraison();
+		Flight::redirect('/form');
+	});
+
+
 
 
 	$router->group('/api', function() use ($router) {

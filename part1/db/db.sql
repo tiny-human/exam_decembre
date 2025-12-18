@@ -89,3 +89,8 @@ INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, a
 ('2024-12-04', 4, 4, 4, 'entrepot', 4, 3, 25000.00),
 ('2024-12-05', 1, 2, 5, 'entrepot', 5, 1, 30000.00);
 
+CREATE OR REPLACE view v_livraison_detail_cout
+as SELECT  l.id_livraison , l.cout_vehicule , v.salaire_chauffeur FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur;
+
+CREATE OR REPLACE view v_livraison_detail_colis
+as SELECT  l.id_livraison , c.id_colis , c.nom , c.poids  FROM exam_livraison l JOIN exam_colis c on l.id_colis = c.id_colis;

@@ -10,8 +10,7 @@ use Flight;
    public function getLivreur(){
     $livreur = new Livreur(Flight::db());
     $liste = $livreur->getLivreur();
-
-   Flight :: render('liste',['livreur' => $liste]);
+    return $liste;
    }
 }
 
