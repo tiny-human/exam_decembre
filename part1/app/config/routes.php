@@ -33,22 +33,10 @@ $router->group('', function(Router $router) use ($app) {
 	});
 
 	$controller = new LivraisonController();
-	//$livreur = new LivreurController();
 
-	$router->get('/liste', function () use($app, $controller) {
-		$produit = $controller->getLivraison();
-	});
-
-	$router->get('/cout', function () use ($app,$controller){
-		$data = $controller->getCoutRevient();
-		$app->render('revient', ['data'=> $data] );
-	});
-	
-	$router->group('/benef', function() use ($router, $controller) {
-		$router->get('/mois', [$controller, 'getBenefMois'] );
-		$router->get('/jour', [$controller, 'getBenefJour'] );
-		$router->get('/annee', [$controller, 'getBenefAnnee'] );
-	});
+	$router->get('/liste', [$controller, 'getLivraison']);
+	$router->get('/benef', [$controller, 'getBenef']);
+	$router->post('/benef', [$controller, 'getBenef']);
 
 	$router->get('/form', function() use ($app, $controller) {
     $controller = new Util();
@@ -73,15 +61,6 @@ $router->group('', function(Router $router) use ($app) {
 		$controller =  new LivraisonController();
 		$controller->insererLivraison();
 		Flight::redirect('/form');
-	});
-
-
-
-
-	$router->group('/api', function() use ($router) {
-		$router->get('/users', [ ApiExampleController::class, 'getUsers' ]);
-		$router->get('/users/@id:[0-9]', [ ApiExampleController::class, 'getUser' ]);
-		$router->post('/users/@id:[0-9]', [ ApiExampleController::class, 'updateUser' ]);
 	});
 	
 }, [ SecurityHeadersMiddleware::class ]);

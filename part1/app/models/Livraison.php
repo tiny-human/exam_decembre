@@ -24,13 +24,6 @@ class Livraison
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getInfoColis(){
-        $sql = "SELECT * FROM vue_prix_colis";
-        $stmt = $this->db->prepare($sql);  
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function getBeneficeParJour() {
         $sql = "SELECT * FROM v_benefice_par_jour";
         $stmt = $this->db->prepare($sql);  

@@ -90,9 +90,9 @@ INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, a
 ('2024-12-05', 1, 2, 5, 'entrepot', 5, 1, 30000.00);
 
 CREATE OR REPLACE view vue_prix_colis as
-SELECT l.date_livraison as date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
+SELECT l.id_livraison, l.date_livraison as date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
 JOIN exam_livraison l ON l.id_colis = c.id_colis
-CROSS JOIN exam_params_poids p;
+CROSS JOIN exam_params_poids p GROUP BY l.id_livraison ;
 
 
    CREATE OR REPLACE VIEW v_benefice_par_jour AS
@@ -101,7 +101,7 @@ SELECT
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
-JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
+JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
 GROUP BY DATE(l.date_livraison);
 
 CREATE OR REPLACE view v_livraison_detail_cout
@@ -111,23 +111,27 @@ CREATE OR REPLACE view v_livraison_detail_colis
 as SELECT  l.id_livraison , c.id_colis , c.nom , c.poids  FROM exam_livraison l JOIN exam_colis c on l.id_colis = c.id_colis;
 
 CREATE OR REPLACE view v_livraison_total_cout as  
-SELECT l.id_livraison as livraison , l.date_livraison as date_livraison, SUM(l.cout_vehicule + v.salaire_chauffeur) as cout_revient 
+SELECT l.id_livraison as id_livraison , l.date_livraison as date_livraison, SUM(l.cout_vehicule + v.salaire_chauffeur) as cout_revient 
 FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur GROUP BY id_livraison;
 
 CREATE OR REPLACE VIEW v_benefice_par_mois AS
-SELECT
+SELECT 
+    YEAR(l.date_livraison) AS annee,
+    MONTH(l.date_livraison) AS num_mois,
     MONTHNAME(l.date_livraison) AS mois,
+    CONCAT(MONTHNAME(l.date_livraison), ' ', YEAR(l.date_livraison)) AS mois_annee,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
-JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
-GROUP BY mois;
+JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
+GROUP BY YEAR(l.date_livraison), MONTH(l.date_livraison)
+ORDER BY annee DESC, num_mois DESC;
 
 CREATE OR REPLACE VIEW v_benefice_par_annee AS
 SELECT YEAR(l.date_livraison) AS annee,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
-JOIN v_livraison_total_cout r ON r.date_livraison = l.date_livraison
+JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
 GROUP BY annee;
 
