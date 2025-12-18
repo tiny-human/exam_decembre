@@ -1,3 +1,5 @@
+	TODOLIST de l'examen decembre 2025 par Nekena(ETU004092) et Tsiky(ETU004069)
+
 General
     base
         Creation de la base de donnees: 
@@ -10,84 +12,99 @@ General
                 -nom
                 -prenom
             livraison
-                -id
-                -colis
-                -addresse de depart
-                -addresse de destination(zone)
-                -statut
-                -date et heure de livraison
-                -carburant
-                -salaire du chauffeur(frais??)
+                -id_livraison INT PRIMARY KEY AUTO_INCREMENT,
+                -date_livraison 
+                -id_vehicule 
+                -id_livreur 
+                -id_colis 
+                -adresse_depart 
+                -id_zone 
+                -id_statut 
+                -cout_vehicule 
             statut
                 -id
                 -type(livré;en attente;annulée)
             zone
                 -id
                 -nom
-            
+            colis
+            	-id
+            	-nom
+            	-prix
+            parametre (pour mettre le prix par kilos des colis)
+            	-id
+            	-prix
         fonction
 
         design
             
         integration
-            
+            creation des models / controllers :
+             livraison / livraisonController
+             livreur / livreurControlleur
+             vehicule / util
+             statut / util
+             zone / util
 //===============================================================
 
 1. Gestion de livraison
 
-    _formulaire pour creer une livraison
+    _(ok)formulaire pour creer une livraison
         base    
 
         fonction
-            creer un model livraison
-                faire une fonction InsertLivraison()
+            
+               (ok)insererLivraison() (par Nekena)
+               (ok)getColis() (par Nekena)
+               (ok)getStatut() (par Nekena)
+               (ok)getVehicule() (par Nekena)
+               (ok)getZone() (par Nekena)
 
         design
-            form + input:
-                id_colis
-                id_vehicule
+            (ok)form + input: (par Nekena et Tsiky)
+                colis (liste deroulante)
+                vehicule
                 date de livraison
-                id_livreur/nom
+                livreur(liste deroulante)
                 addresse_depart(entrepot)
                 nom de zone(addresse_destination)
                 statut(liste deroulante)
-                carburant
-                salaire du chauffeur
+                cout du vehicule
                 +buton valider
         integration
-            creer un controller livraisonController
-                appeler InsertLivraison(), inserer les donnees recuperees dans le form
+                (ok)appeler insererLivraison(), inserer les donnees recuperees via form (dans livraisonController) (par Nekena)
+                (ok)appeler getColis(),getStatut(),getVehicule(),getZone() (dans util) (par Nekena)
+                
 
-    _affichage des livraison
+    (ok)_affichage des livraison
         base
-            insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)
+            (ok)insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)(par Nekena )
             
         fonction
-            getLivraison()
-            getlivreur()
+            (ok)getLivraison()(par Tsiky)
 
         design
-            Affichage sous forme de tableau avec poids colis
+            (ok)Affichage sous forme de tableau(par Tsiky)
         integration
-            appeler getLivraison()
+            (ok)appeler getLivraison()(dans livraisonController)(par Tsiky)
 
 //===============================================================
+2.(ok) Créer directement les autres données nécessaires dans la table
 
 3.  bénéfice par periode (jour,mois ,annee)
-    base
-        creation de vue pour calcul de chaque benefice par periode
-    fonction
-        getBeneficeParJour()
-        getBeneficeParMois()
-        getBeneficeParAnnee()
-    design
-        Affichage sous frome de tableau pour chaque periode
-    integration
-        appel des fonctions : 
-            getBeneficeParJour()
-            getBeneficeParMois()
-            getBeneficeParAnnee()
+        base
+            (ok)creation de vue differentes pour calcul de chaque benefice par periode (par Tsiky)
+        fonction
+            (ok)getBeneficeParJour() (par Tsiky)
+            (ok)getBeneficeParMois() (par Tsiky)
+            (ok)getBeneficeParAnnee() (par Tsiky)
+        design
+            (en cours)mettre un filtre pour chaque periode 
+            (ok)Affichage sous frome de tableau pour chaque periode (par Tsiky)
+        integration
+            appel des fonctions : 
+                (ok)getBeneficeParJour() 	}
+                (ok)getBeneficeParMois() 	}(dans livraisonController) (par Tsiky) 
+                (ok)getBeneficeParAnnee() 	}
 
-SELECT SUM(t.recette - t.carburant) as benefice, v.immatricule FROM trajet t JOIN vehicule v ON v.id = t.id_vehicule GROUP BY v.immatricule;
-SELECT SUM(recette - carburant) as benefice, DATE(depart) FROM trajet GROUP BY DATE(depart);
-SELECT MAX(recette) as plus_rentable, DATE(depart) FROM trajet GROUP BY DATE(depart);
+
