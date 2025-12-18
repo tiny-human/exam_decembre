@@ -81,7 +81,6 @@ h1 {
     display: block;
 }
 
-/* --- FORMULAIRES ET FILTRES --- */
 .form-card, .form-filtre {
     background-color: #fff;
     padding: 30px;
@@ -94,7 +93,7 @@ h1 {
 }
 
 .form-filtre {
-    background: #ebf5fb; /* Bleu très clair pour la page bénéfice */
+    background: #ebf5fb; 
 }
 
 .form-filtre form {
@@ -123,7 +122,6 @@ label {
     font-size: 0.9rem;
 }
 
-/* --- INPUTS MODERNES --- */
 input[type="text"], 
 input[type="number"], 
 input[type="date"], 
@@ -151,7 +149,6 @@ input:focus, select:focus {
     outline: none;
 }
 
-/* --- TABLEAUX --- */
 .table-container {
     width: 100%;
     max-width: 1200px;
@@ -198,7 +195,6 @@ table td:last-child {
     color: #2980b9;
 }
 
-/* --- BOUTONS --- */
 .container-buttons, .retour {
     display: flex;
     gap: 15px;
@@ -226,8 +222,8 @@ button, .btn-submit, .btn, .form-filtre button {
 }
 
 .form-filtre button {
-    background-color: #2980b9; /* Bleu pour le filtre */
-    height: 46px; /* Alignement avec les inputs */
+    background-color: #2980b9; 
+    height: 46px; 
 }
 
 .btn-insert:hover, .btn-submit:hover, .form-filtre button:hover {
@@ -247,7 +243,6 @@ button, .btn-submit, .btn, .form-filtre button {
     font-size: 0.9rem;
 }
 
-/* --- ALERTES ET DIVERS --- */
 .erreur {
     background-color: #fceaea;
     color: #c0392b;

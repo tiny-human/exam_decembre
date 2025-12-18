@@ -113,7 +113,8 @@ $baseUrl = $app->get('flight.base_url');
             <input type="submit" class="btn-submit" value="Confirmer la creation">
         </form>
     </div>
-    <script type="text/javascript">
+    <script>
+        //code tp9 moa ?
         window.addEventListener("load", function() {
             function sendData() {
                 var xhr = new XMLHttpRequest();
@@ -125,7 +126,6 @@ $baseUrl = $app->get('flight.base_url');
                 xhr.addEventListener("error", function(event) {
                     alert('Oups! Quelque chose s\'est mal passé lors de l\'envoi.');
                 });
-
                 xhr.open("POST", "/insert_livraison",true); 
                 xhr.send(formData);
             }

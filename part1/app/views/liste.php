@@ -1,9 +1,6 @@
 <?php 
-
 $app = Flight::app();
 $baseUrl = $app->get('flight.base_url');
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -76,7 +73,7 @@ $baseUrl = $app->get('flight.base_url');
     </table>
     <div class="container-buttons">
         <a href="/form"><button class="btn-insert">Inserer une livraison</button></a>
-        <a href="/benef"><button class="btn-stats">Bénéfices societe</button></a>
+        <a href="/benef"><button class="btn-stats">Benefices societe</button></a>
     </div>
     <footer class="main-footer">
     <p>&copy; <?= date('Y') ?> - Service de livraison Madagascar. Tous droits réservés (Neks et Tsiky).</p>
