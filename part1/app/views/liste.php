@@ -1,44 +1,88 @@
+<?php 
+
+$app = Flight::app();
+$baseUrl = $app->get('flight.base_url');
+
+
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les livraisons</title>
+    <title>Gestion des Livraisons</title>
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <table border = "collapse 1px">
-        <tr>
-            <td>id livraison</td>
-            <td>id colis</td>
-            <td>id vehicule</td>
-            <td>livreur</td>
-            <td>cout de revient</td>
-            <td>chiffre d'affaire</td>
-            <td>date de la livraison</td>
-            <td>statut</td>
-        </tr>
-        <?php foreach($liste as $l){ ?>
+    <header class="main-navbar">
+        <div class="nav-content">
+            <a href="/liste" class="nav-logo">
+                <img src="/images/livraison-rapide.png" alt="" style="height: 30px;">
+                Service de livraison
+            </a>
+            <nav class="nav-links">
+                <a href="/liste">Tableau de bord</a>
+                <a href="/form">Nouvelle Livraison</a>
+                <a href="/benef">Bénéfices</a>
+            </nav>
+        </div>
+    </header>
+    <h1 class="title-container">
+        <span>Suivi des Livraisons</span>
+    </h1>
+    <table>
+        <thead>
             <tr>
-                <td><?= $l['id_livraison'] ?></td>
-                <td><?= $l['colis'] ?></td>
-                <td><?= $l['vehicule'] ?></td>
-                <td><?= $l['livreur'] ?></td>
-                <?php foreach ($cout as $c ) { 
-                    if ($c['id_livraison'] == $l['id_livraison']) { ?>
-                        <td><?= $c['cout_revient'] ?></td>
-                   <?php }?>
-                <?php } ?>
-                <?php foreach ($recette as $r ) { 
-                    if ($r['id_livraison'] == $l['id_livraison']) { ?>
-                        <td><?= $r['chiffre_affaire'] ?></td>
-                   <?php }?>
-                <?php } ?>
-                <td><?= $l['dates'] ?></td>
-                <td><?= $l['statut'] ?></td>
+                <th>ID</th>
+                <th>Colis</th>
+                <th>Véhicule</th>
+                <th>Livreur</th>
+                <th>Coût Revient</th>
+                <th>Chiffre d'affaire</th>
+                <th>Date</th>
+                <th>Statut</th>
             </tr>
-        <?php } ?>
+        </thead>
+        <tbody>
+            <?php foreach ($liste as $l) { ?>
+                <tr>
+                    <td><strong><?= $l['id_livraison'] ?></strong></td>
+                    <td><?= $l['colis'] ?></td>
+                    <td><?= $l['vehicule'] ?></td>
+                    <td><?= $l['livreur'] ?></td>
+                    <?php
+                    $cout_val = "-";
+                    foreach ($cout as $c) {
+                        if ($c['id_livraison'] == $l['id_livraison']) {
+                            $cout_val = $c['cout_revient'] . " Ar";
+                        }
+                    }
+                    ?>
+                    <td><?= $cout_val ?></td>
+                    <?php
+                    $ca_val = "-";
+                    foreach ($recette as $r) {
+                        if ($r['id_livraison'] == $l['id_livraison']) {
+                            $ca_val = $r['chiffre_affaire'] . " Ar";
+                        }
+                    }
+                    ?>
+                    <td><?= $ca_val ?></td>
+                    <td><?= $l['dates'] ?></td>
+                    <td class="status-cell"><?= $l['statut'] ?></td>
+                </tr>
+            <?php } ?>
+        </tbody>
     </table>
-    <a href="/form"><button>inserer une livraison</button></a>
-    <a href="/benef"><button>les benefices de la societe</button></a>
+    <div class="container-buttons">
+        <a href="/form"><button class="btn-insert">Inserer une livraison</button></a>
+        <a href="/benef"><button class="btn-stats">Bénéfices societe</button></a>
+    </div>
+    <footer class="main-footer">
+    <p>&copy; <?= date('Y') ?> - Service de livraison Madagascar. Tous droits réservés (Neks et Tsiky).</p>
+    <p>Ariary (MGA)</p>
+</footer>
+
 </body>
+
 </html>

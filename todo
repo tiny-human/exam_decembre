@@ -2,6 +2,7 @@
 
 General
     base
+        Mettre une variable baseURL dans config pour faciliter le deploiement
         Creation de la base de donnees: 
         creation tables:
             vehicule
@@ -53,7 +54,6 @@ General
         base    
 
         fonction
-            
                (ok)insererLivraison() (par Nekena)
                (ok)getColis() (par Nekena)
                (ok)getStatut() (par Nekena)
@@ -72,17 +72,15 @@ General
                 cout du vehicule
                 +buton valider
         integration
+                (ok) Utilisation de ajax XHR pour l'insertion(par Nekena)
                 (ok)appeler insererLivraison(), inserer les donnees recuperees via form (dans livraisonController) (par Nekena)
                 (ok)appeler getColis(),getStatut(),getVehicule(),getZone() (dans util) (par Nekena)
-                
 
     (ok)_affichage des livraison
         base
             (ok)insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)(par Nekena )
-            
         fonction
             (ok)getLivraison()(par Tsiky)
-
         design
             (ok)Affichage sous forme de tableau(par Tsiky)
         integration

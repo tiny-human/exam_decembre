@@ -19,7 +19,8 @@ use flight\net\Router;
 $router->group('', function(Router $router) use ($app) {
 
 	$router->get('/', function() use ($app) {
-		$app->render('welcome', [ 'message' => 'You are gonna do great things!' ]);
+		Flight::redirect('/liste');
+		
 	});
 
 	$router->get('/hello-world/@name', function($name) {
@@ -56,11 +57,9 @@ $router->group('', function(Router $router) use ($app) {
 		]);
 	});
 
-
-	$router->post('/insert_livarison',function () use ($controller){
+	$router->post('/insert_livraison',function () use ($controller){
 		$controller =  new LivraisonController();
 		$controller->insererLivraison();
-		Flight::redirect('/form');
 	});
 	
 }, [ SecurityHeadersMiddleware::class ]);

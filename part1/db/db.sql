@@ -41,8 +41,6 @@ CREATE TABLE exam_livraison(
     FOREIGN KEY (id_zone) REFERENCES exam_zone(id_zone),
     FOREIGN KEY (id_statut) REFERENCES exam_statut(id_statut)
 );
-
-
 INSERT INTO exam_vehicule (numero) VALUES
 ('V0001'),
 ('V0002'),
@@ -75,8 +73,8 @@ INSERT INTO exam_colis (nom, poids) VALUES
 ('Vary', 25.0),
 ('Kafe', 10.0),
 ('Litchi', 50.0),
-('Vanille 2kg', 2.0),
-('Zebu viande 30kg', 30.0);
+('Vanille', 2.0),
+('Zebu viande ', 30.0);
 
 -- 6. Insérer paramètres de poids (prix par kg en Ariary)
 INSERT INTO exam_params_poids (prix_par_kg) VALUES (8000.00); 

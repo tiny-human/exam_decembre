@@ -113,7 +113,7 @@ use Flight;
                 }
             }
     
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $benefices = [];
             $messageErreur = "Erreur lors du chargement des données. Veuillez réessayer plus tard.";
             error_log($e->getMessage());
@@ -131,18 +131,25 @@ use Flight;
     }
 
     public function insererLivraison(){
-        $db = Flight::db();
-        $date = $_POST['date_livraison'] ;
-        $id_vehicule = $_POST['id_vehicule'];
-        $id_livreur = $_POST['id_livreur'];
-        $id_colis = $_POST['id_colis'] ?? '';
-        $addresse_depart = $_POST['adresse_depart'] ;
-        $zone = $_POST['id_zone'] ;
-        $statut = $_POST['id_statut'] ;
-        $cout_vehicule = $_POST['cout_vehicule'];
+    $db = Flight::db();
+    $date = $_POST['date_livraison'];
+    $id_vehicule = $_POST['id_vehicule'];
+    $id_livreur = $_POST['id_livreur'];
+    $id_colis = $_POST['id_colis'] ?? '';
+    $addresse_depart = $_POST['adresse_depart'];
+    $zone = $_POST['id_zone'];
+    $statut = $_POST['id_statut'];
+    $cout_vehicule = $_POST['cout_vehicule'];
+    try {
         $livraison = new Livraison($db);
-        $livraison->insertLivraison($date,$id_vehicule,$id_livreur,$id_colis,$addresse_depart,$zone,$statut,$cout_vehicule);
+        $livraison->insertLivraison($date, $id_vehicule, $id_livreur, $id_colis, $addresse_depart, $zone, $statut, $cout_vehicule);
+        echo "Livraison inserer avec succes";
+    } catch (\Throwable $e) {
+        echo "Erreur lors de la creation";
     }
+}
+
+  
 
 }
 
