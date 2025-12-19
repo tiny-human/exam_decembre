@@ -14,6 +14,7 @@ CREATE TABLE exam_statut(
 );
 CREATE TABLE exam_zone(
     id_zone INT PRIMARY KEY AUTO_INCREMENT,
+    pourcentage FLOAT,
     nom_zone VARCHAR(100)
 );
 CREATE TABLE exam_colis(
@@ -45,14 +46,33 @@ INSERT INTO exam_vehicule (numero) VALUES
 ('V0001'),
 ('V0002'),
 ('V0003'),
-('V0004');
+('V0004'),
+('V0005'),
+('V0006'),
+('V0007'),
+('V0008'),
+('V0009'),
+('v0010');
+
+
 
 -- 2. Insérer des livreurs (salaire en Ariary)
 INSERT INTO exam_livreur (nom, prenom, salaire_chauffeur) VALUES
-('Rakoto', 'Jean', 10000.00),    
-('Rasoa', 'Marie', 25000.00),     
-('Randria', 'Paul',30000.00),    
-('Rabe', 'Sophie', 15000.00);
+('Rakoto', 'Jean', 20000.00),    
+('Rasoa', 'Marie', 20000.00),     
+('Randria', 'Paul',18000.00),    
+('Rabe', 'Sophie', 15000.00),
+('Leblanc' , 'Dylan',15000.00),
+('Ravao' , 'Tsiky',15000.00),
+('Mpanana' , 'Giovan',15000.00),
+('Noor' , 'Taariq',15000.00),
+('Naivosoa' , 'Owan',18000.00),
+('Rakotonjanahary' , 'Yollan',18000.00),
+('Manda' , 'Miaro',20000.00),
+('LeMinistre' , 'Tiavina',20000.00);
+
+
+
 
 -- 3. Insérer des statuts
 INSERT INTO exam_statut (statut) VALUES
@@ -61,12 +81,12 @@ INSERT INTO exam_statut (statut) VALUES
 ('annule');         
     
 -- 4. Insérer des zones (noms à Madagascar)
-INSERT INTO exam_zone (nom_zone) VALUES
-('Itaosy'),
-('Ivato'),
-('Andoharanofotsy'),
-('Analakely/ville'),
-('Ambohimangakely');
+INSERT INTO exam_zone (nom_zone,pourcentage) VALUES
+('Itaosy',12.5),
+('Ivato,12.5'),
+('Andoharanofotsy,12.5'),
+('Analakely/ville,0'),
+('Ambohimangakely,0');
 
 -- 5. Insérer des colis
 INSERT INTO exam_colis (nom, poids) VALUES
@@ -100,7 +120,7 @@ SELECT
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
-WHERE l.id_statut = 2 GROUP BY jour;
+GROUP BY DATE(l.date_livraison);
 
 CREATE OR REPLACE view v_livraison_detail_cout
 as SELECT  l.id_livraison , l.cout_vehicule , v.salaire_chauffeur FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur;
@@ -115,13 +135,15 @@ FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur GROUP B
 CREATE OR REPLACE VIEW v_benefice_par_mois AS
 SELECT 
     YEAR(l.date_livraison) AS annee,
+    MONTH(l.date_livraison) AS num_mois,
     MONTHNAME(l.date_livraison) AS mois,
+    CONCAT(MONTHNAME(l.date_livraison), ' ', YEAR(l.date_livraison)) AS mois_annee,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
-WHERE l.id_statut = 2 GROUP BY YEAR(l.date_livraison), MONTH(l.date_livraison)
-ORDER BY annee DESC;
+GROUP BY YEAR(l.date_livraison), MONTH(l.date_livraison)
+ORDER BY annee DESC, num_mois DESC;
 
 CREATE OR REPLACE VIEW v_benefice_par_annee AS
 SELECT YEAR(l.date_livraison) AS annee,
@@ -129,5 +151,5 @@ SELECT YEAR(l.date_livraison) AS annee,
 FROM exam_livraison l
 JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
-WHERE l.id_statut = 2 GROUP BY annee;
+GROUP BY annee;
 
