@@ -12,19 +12,6 @@ $baseUrl = $app->get('flight.base_url');
 </head>
 <body>
     <?php include('header.php')?>
-    <header class="main-navbar">
-        <div class="nav-content">
-            <a href="/liste" class="nav-logo">
-                <img src="/images/livraison-rapide.png" alt="" style="height: 30px;">
-                Service de livraison
-            </a>
-            <nav class="nav-links">
-                <a href="/liste">Suivi des livraisons</a>
-                <a href="/form">Nouvelle Livraison</a>
-                <a href="/benef">Bénéfices</a>
-            </nav>
-        </div>
-    </header>
     <h1 class="title-container">
         <span>Suivi des Livraisons</span>
     </h1>
