@@ -66,7 +66,7 @@ $baseUrl = $app->get('flight.base_url');
                         }
                     }
                     ?>
-                    <td><?= $ca_val ?></td>
+                    <td><?= $l['statut'] == "annule" ? "0" : $ca_val ?></td>
                     <td><?= $l['dates'] ?></td>
                     <td class="status-cell"><?= $l['statut'] ?></td>
                     <td>

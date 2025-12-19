@@ -20,7 +20,6 @@
             <form method="POST" action="/benef">
                 <label for="jour">Jour :</label>
                 <input type="date" name="jour" id="jour" value="<?= ($jour ?? '') ?>">
-
                 <label for="mois">Mois :</label>
                 <select name="mois" id="mois">
                 <option value=""></option>
@@ -40,12 +39,10 @@
 
                 <label for="annee">Annee :</label>
                 <input type="number" name="annee" id="annee" placeholder="Ex: 2025" value="<?= ($annee ?? '') ?>">
-
                 <button type="submit">Afficher les benefices</button>
             </form>
             <small>Ne remplissez qu un seul champ a la fois.</small>
         </div>
-
         <?php if ($messageErreur): ?>
             <div class="erreur">
                 <?= ($messageErreur) ?>
@@ -57,7 +54,7 @@
                 <thead>
                     <tr>
                         <th>Periode</th>
-                        <th>Benefice (Ar)</th>
+                        <th>Benefice </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +88,5 @@
         </div>
     </div>
     <?php include('footer.php')?>
-
-   
 </body>
 </html>
