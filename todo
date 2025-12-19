@@ -97,8 +97,10 @@ General
         integration
                 (ok) Utilisation de ajax XHR pour la modification(par Nekena)
                 (ok)appeler updaterLivraison() avec les donnees recuperees via form (dans livraisonController) (par Nekena)
+
     (ok)_affichage des livraison
         base
+            (ok)creation vue pour avoir les prix en fonction du poids par colis (par Tsiky)
             (ok)insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)(par Nekena )
         fonction
             (ok)getLivraison()(par Tsiky)
@@ -112,19 +114,20 @@ General
 
 3.  bénéfice par periode (jour,mois ,annee)
         base
-            (ok)creation de vue differentes pour calcul de chaque benefice par periode (par Tsiky)
+            (ok)creation de vue  pour calcul du cout de revient (par Tsiky)
+            (ok)creation de vues differentes pour calcul de chaque benefice par periode (par Tsiky)
         fonction
-            (ok)getBeneficeParJour() (par Tsiky)
-            (ok)getBeneficeParMois() (par Tsiky)
-            (ok)getBeneficeParAnnee() (par Tsiky)
+            (ok)getBeneficeParJour(jour) (par Tsiky)
+            (ok)getBeneficeParMois(mois,annee) (par Tsiky)
+            (ok)getBeneficeParAnnee(annee) (par Tsiky)
         design
             (ok)mettre un filtre pour chaque periode (par Tsiky)
-            (ok)Affichage sous frome de tableau pour chaque periode (par Tsiky)
+            (ok)Affichage pour chaque periode (par Tsiky)
         integration
             appel des fonctions : 
-                (ok)getBeneficeParJour() 	}
-                (ok)getBeneficeParMois() 	}(dans livraisonController avec getBenef()) (par Tsiky) 
-                (ok)getBeneficeParAnnee() 	}
+                (ok)getBeneficeParJour(jour) 	}
+                (ok)getBeneficeParMois(mois,annee) 	}(dans livraisonController avec getBenef()) (par Tsiky) 
+                (ok)getBeneficeParAnnee(annee) 	}
 
 
 

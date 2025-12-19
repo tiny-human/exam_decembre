@@ -35,24 +35,44 @@ class Livraison
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getBeneficeParJour() {
+    public function getBeneficeParJour($jour) {
+        $sql = "SELECT * FROM v_benefice_par_jour WHERE jour = :jour";
+        $stmt = $this->db->prepare($sql);  
+        $stmt->execute([
+            ':jour' => $jour
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getBenefice() {
         $sql = "SELECT * FROM v_benefice_par_jour";
         $stmt = $this->db->prepare($sql);  
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getBeneficeParMois() {
-        $sql = "SELECT * FROM v_benefice_par_mois";
+    public function getBeneficeParMois($mois,$annee) {
+        $sql = "SELECT * FROM v_benefice_par_mois WHERE 1 = 1";
+        if ($mois != null) {
+            $sql .= " AND mois = :mois";
+        }
+        if ($annee != null) {
+            $sql .= " AND annee = :annee";
+        }
         $stmt = $this->db->prepare($sql);  
-        $stmt->execute();
+        $stmt->execute([
+            ':mois' => $mois,
+            ':annee' => $annee
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getBeneficeParAnnee() {
-        $sql = "SELECT * FROM v_benefice_par_annee";
+    public function getBeneficeParAnnee($annee) {
+        $sql = "SELECT * FROM v_benefice_par_annee WHERE annee = :annee";
         $stmt = $this->db->prepare($sql);  
-        $stmt->execute();
+        $stmt->execute([
+            ':annee' => $annee
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

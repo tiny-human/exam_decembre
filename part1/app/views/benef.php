@@ -23,7 +23,21 @@
                 <input type="date" name="jour" id="jour" value="<?= ($jour ?? '') ?>">
 
                 <label for="mois">Mois :</label>
-                <input type="month" name="mois" id="mois" value="<?= ($mois ?? '') ?>" placeholder="mois en francais">
+                <select name="mois" id="mois">
+                <option value=""></option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
 
                 <label for="annee">Annee :</label>
                 <input type="number" name="annee" id="annee" placeholder="Ex: 2025" value="<?= ($annee ?? '') ?>">

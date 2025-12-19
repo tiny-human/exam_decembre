@@ -21,12 +21,14 @@ use Flight;
             'recette' => $recette
         ]);
     }
+
     public function getLivraisonParId($id) {
     $db = Flight::db();
     $Livraison = new Livraison($db);
     $liste   = $Livraison->getLivraisonParId($id);
     return $liste;
     }
+
     public function getBenef() {
         $db = Flight::db();
         $Livraison = new Livraison($db);
@@ -55,6 +57,7 @@ use Flight;
                 if ($trouve) {
                     $titre = "Bénéfice du " . date('d/m/Y', strtotime($jour));
                     $typeAffiche = "jour";
+
                 } else {
                     $benefices = [];
                     $messageErreur = "Aucun bénéfice trouvé pour le jour sélectionné : " . date('d/m/Y', strtotime($jour));
@@ -62,11 +65,11 @@ use Flight;
                 }
     
             } elseif (!empty($mois)) {
-                $benefices = $Livraison->getBeneficeParMois($mois);
+                $benefices = $Livraison->getBeneficeParMois($mois,$annee);
     
                 $trouve = false;
                 foreach ($benefices as $b) {
-                    $moisDansBase = $b['annee'] . '-' . str_pad($b['num_mois'] ?? $b['mois'], 2, '0', STR_PAD_LEFT);
+                    $moisDansBase = $b['mois'];
                     if ($moisDansBase == $mois) {
                         $trouve = true;
                         break;
@@ -74,14 +77,12 @@ use Flight;
                 }
     
                 if ($trouve) {
-                    $dateObj = DateTime::createFromFormat('Y-m', $mois);
-                    $titre = "Bénéfice de " . $dateObj->format('F Y');
+                    $titre = "Bénéfice du mois de " . $mois .$annee;
                     $typeAffiche = "mois";
+
                 } else {
                     $benefices = [];
-                    $dateObj = DateTime::createFromFormat('Y-m', $mois);
-                    $moisNom = $dateObj ? $dateObj->format('F Y') : $mois;
-                    $messageErreur = "Aucun bénéfice trouvé pour le mois de $moisNom";
+                    $messageErreur = "Aucun bénéfice trouvé pour le mois de " . $mois." " .$annee;
                     $typeAffiche = "mois";
                 }
     
@@ -98,6 +99,7 @@ use Flight;
                 if ($trouve) {
                     $titre = "Bénéfice de l'année $annee";
                     $typeAffiche = "annee";
+                   
                 } else {
                     $benefices = []; 
                     $messageErreur = "Aucun bénéfice trouvé pour l'année $annee";
@@ -105,13 +107,13 @@ use Flight;
                 }
 
             } else {
-                $benefices = $Livraison->getBeneficeParJour(); 
+                $benefices = $Livraison->getBenefice(); 
     
                 if (empty($benefices)) {
                     $messageErreur = "Aucune donnée de bénéfice disponible pour le moment.";
                 } else {
                     $titre = "Bénéfices par de la societe";
-                    $typeAffiche = "mois";
+                    $typeAffiche = "jour";
                 }
             }
     
