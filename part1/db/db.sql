@@ -1,32 +1,50 @@
-CREATE TABLE exam_vehicule(
+
+
+CREATE TABLE exam_vehicule (
     id_vehicule INT PRIMARY KEY AUTO_INCREMENT,
     numero VARCHAR(50)
 );
-CREATE TABLE exam_livreur(
+
+CREATE TABLE exam_livreur (
     id_livreur INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(50),
-    salaire_chauffeur FLOAT,
-    prenom VARCHAR(50)
+    prenom VARCHAR(50),
+    salaire_chauffeur FLOAT
 );
-CREATE TABLE exam_statut(
+
+CREATE TABLE exam_statut (
     id_statut INT PRIMARY KEY AUTO_INCREMENT,
     statut VARCHAR(20)
 );
-CREATE TABLE exam_zone(
-    id_zone INT PRIMARY KEY AUTO_INCREMENT,
-    pourcentage FLOAT,
-    nom_zone VARCHAR(100)
+
+
+CREATE TABLE exam_statut_zone(
+    id_statut_zone INT PRIMARY KEY AUTO_INCREMENT,
+    statut VARCHAR(100)
 );
-CREATE TABLE exam_colis(
+
+CREATE TABLE exam_zone (
+    id_zone INT PRIMARY KEY AUTO_INCREMENT,
+    id_statut_zone INT,
+    nom_zone VARCHAR(100),
+    pourcentage FLOAT,
+    FOREIGN KEY (id_statut_zone) REFERENCES exam_statut_zone(id_statut_zone)
+);
+
+
+
+CREATE TABLE exam_colis (
     id_colis INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100),
-    poids  FLOAT
+    poids FLOAT
 );
-CREATE TABLE exam_params_poids(
+
+CREATE TABLE exam_params_poids (
     id_param INT PRIMARY KEY AUTO_INCREMENT,
     prix_par_kg FLOAT
 );
-CREATE TABLE exam_livraison(
+
+CREATE TABLE exam_livraison (
     id_livraison INT PRIMARY KEY AUTO_INCREMENT,
     date_livraison DATE,
     id_vehicule INT,
@@ -34,7 +52,7 @@ CREATE TABLE exam_livraison(
     id_colis INT,
     adresse_depart VARCHAR(100),
     id_zone INT,
-    id_statut INT ,
+    id_statut INT,
     cout_vehicule FLOAT,
     FOREIGN KEY (id_vehicule) REFERENCES exam_vehicule(id_vehicule),
     FOREIGN KEY (id_livreur) REFERENCES exam_livreur(id_livreur),
@@ -42,114 +60,118 @@ CREATE TABLE exam_livraison(
     FOREIGN KEY (id_zone) REFERENCES exam_zone(id_zone),
     FOREIGN KEY (id_statut) REFERENCES exam_statut(id_statut)
 );
+
+/* =========================
+   DONNÉES
+========================= */
+
 INSERT INTO exam_vehicule (numero) VALUES
-('V0001'),
-('V0002'),
-('V0003'),
-('V0004'),
-('V0005'),
-('V0006'),
-('V0007'),
-('V0008'),
-('V0009'),
-('v0010');
+('V0001'), ('V0002'), ('V0003'), ('V0004'), ('V0005'),
+('V0006'), ('V0007'), ('V0008'), ('V0009'), ('V0010');
 
-
-
--- 2. Insérer des livreurs (salaire en Ariary)
 INSERT INTO exam_livreur (nom, prenom, salaire_chauffeur) VALUES
-('Rakoto', 'Jean', 20000.00),    
-('Rasoa', 'Marie', 20000.00),     
-('Randria', 'Paul',18000.00),    
-('Rabe', 'Sophie', 15000.00),
-('Leblanc' , 'Dylan',15000.00),
-('Ravao' , 'Tsiky',15000.00),
-('Mpanana' , 'Giovan',15000.00),
-('Noor' , 'Taariq',15000.00),
-('Naivosoa' , 'Owan',18000.00),
-('Rakotonjanahary' , 'Yollan',18000.00),
-('Manda' , 'Miaro',20000.00),
-('LeMinistre' , 'Tiavina',20000.00);
+('Rakoto','Jean',20000),
+('Rasoa','Marie',20000),
+('Randria','Paul',18000),
+('Rabe','Sophie',15000),
+('Leblanc','Dylan',15000),
+('Ravao','Tsiky',15000),
+('Mpanana','Giovan',15000),
+('Noor','Taariq',15000),
+('Naivosoa','Owan',18000),
+('Rakotonjanahary','Yollan',18000),
+('Manda','Miaro',20000),
+('LeMinistre','Tiavina',20000);
 
-
-
-
--- 3. Insérer des statuts
 INSERT INTO exam_statut (statut) VALUES
-('attente'),      
-('livre'),         
-('annule');         
-    
--- 4. Insérer des zones (noms à Madagascar)
-INSERT INTO exam_zone (nom_zone,pourcentage) VALUES
-('Itaosy',12.5),
-('Ivato,12.5'),
-('Andoharanofotsy,12.5'),
-('Analakely/ville,0'),
-('Ambohimangakely,0');
+('attente'), ('livre'), ('annule');
 
--- 5. Insérer des colis
+INSERT INTO exam_statut_zone(statut) VALUES
+('dispo'), ('supprimer');
+
+
+INSERT INTO exam_zone (nom_zone, pourcentage,id_statut_zone) VALUES
+('Itaosy',12.5,1),
+('Ivato',12.5,1),
+('Andoharanofotsy',12.5,1),
+('Analakely/ville',0,1),
+('Ambohimangakely',0,1);
+
 INSERT INTO exam_colis (nom, poids) VALUES
-('Vary', 25.0),
-('Kafe', 10.0),
-('Litchi', 50.0),
-('Vanille', 2.0),
-('Zebu viande ', 30.0);
+('Vary',25),
+('Kafe',10),
+('Litchi',50),
+('Vanille',2),
+('Zebu viande',30);
 
--- 6. Insérer paramètres de poids (prix par kg en Ariary)
-INSERT INTO exam_params_poids (prix_par_kg) VALUES (8000.00); 
+INSERT INTO exam_params_poids (prix_par_kg) VALUES (8000);
 
--- 7. Insérer des livraisons
-INSERT INTO exam_livraison (date_livraison, id_vehicule, id_livreur, id_colis, adresse_depart, id_zone, id_statut, cout_vehicule) VALUES
-('2024-12-01', 1, 1, 1, 'entrepot', 1, 1, 15000.00),
-('2024-12-02', 2, 2, 2, 'entrepot', 2, 2, 20000.00),
-('2024-12-03', 3, 3, 3, 'entrepot', 3, 2, 18000.00),
-('2024-12-04', 4, 4, 4, 'entrepot', 4, 3, 25000.00),
-('2024-12-05', 1, 2, 5, 'entrepot', 5, 1, 30000.00);
+INSERT INTO exam_livraison
+(date_livraison,id_vehicule,id_livreur,id_colis,adresse_depart,id_zone,id_statut,cout_vehicule)
+VALUES
+('2024-12-01',1,1,1,'entrepot',1,1,15000),
+('2024-12-02',2,2,2,'entrepot',2,2,20000),
+('2024-12-03',3,3,3,'entrepot',3,2,18000),
+('2024-12-04',4,4,4,'entrepot',4,3,25000),
+('2024-12-05',1,2,5,'entrepot',5,1,30000);
 
-CREATE OR REPLACE view vue_prix_colis as
-SELECT l.id_livraison, l.date_livraison as date_livraison, c.nom as colis, c.poids as poids_kg ,(c.poids * p.prix_par_kg) AS chiffre_affaire FROM exam_colis c
-JOIN exam_livraison l ON l.id_colis = c.id_colis
-CROSS JOIN exam_params_poids p GROUP BY l.id_livraison ;
+/* =========================
+   VUES
+========================= */
 
-
-   CREATE OR REPLACE VIEW v_benefice_par_jour AS
+CREATE OR REPLACE VIEW v_livraison_detail_cout AS
 SELECT
-    DATE(l.date_livraison) AS jour,
+    l.id_livraison,
+    l.cout_vehicule,
+    v.salaire_chauffeur
+FROM exam_livraison l
+JOIN exam_livreur v ON l.id_livreur = v.id_livreur;
+
+CREATE OR REPLACE VIEW v_livraison_total_cout AS
+SELECT
+    l.id_livraison,
+    l.date_livraison,
+    (l.cout_vehicule + v.salaire_chauffeur) AS cout_revient
+FROM exam_livraison l
+JOIN exam_livreur v ON l.id_livreur = v.id_livreur;
+
+CREATE OR REPLACE VIEW vue_prix_colis AS
+SELECT
+    l.id_livraison,
+    l.date_livraison,
+    c.nom AS colis,
+    c.poids AS poids_kg,
+    (c.poids * p.prix_par_kg) AS chiffre_affaire
+FROM exam_livraison l
+JOIN exam_colis c ON l.id_colis = c.id_colis
+JOIN exam_params_poids p;
+
+CREATE OR REPLACE VIEW v_benefice_par_jour AS
+SELECT
+    l.date_livraison AS jour,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
-JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN vue_prix_colis c ON c.id_livraison = l.id_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
-GROUP BY DATE(l.date_livraison);
-
-CREATE OR REPLACE view v_livraison_detail_cout
-as SELECT  l.id_livraison , l.cout_vehicule , v.salaire_chauffeur FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur;
-
-CREATE OR REPLACE view v_livraison_detail_colis
-as SELECT  l.id_livraison , c.id_colis , c.nom , c.poids  FROM exam_livraison l JOIN exam_colis c on l.id_colis = c.id_colis;
-
-CREATE OR REPLACE view v_livraison_total_cout as  
-SELECT l.id_livraison as id_livraison , l.date_livraison as date_livraison, SUM(l.cout_vehicule + v.salaire_chauffeur) as cout_revient 
-FROM exam_livraison l JOIN exam_livreur v on l.id_livreur = v.id_livreur GROUP BY id_livraison;
+GROUP BY l.date_livraison;
 
 CREATE OR REPLACE VIEW v_benefice_par_mois AS
-SELECT 
+SELECT
     YEAR(l.date_livraison) AS annee,
     MONTH(l.date_livraison) AS num_mois,
     MONTHNAME(l.date_livraison) AS mois,
-    CONCAT(MONTHNAME(l.date_livraison), ' ', YEAR(l.date_livraison)) AS mois_annee,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
-JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN vue_prix_colis c ON c.id_livraison = l.id_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
 GROUP BY YEAR(l.date_livraison), MONTH(l.date_livraison)
 ORDER BY annee DESC, num_mois DESC;
 
 CREATE OR REPLACE VIEW v_benefice_par_annee AS
-SELECT YEAR(l.date_livraison) AS annee,
+SELECT
+    YEAR(l.date_livraison) AS annee,
     SUM(c.chiffre_affaire - r.cout_revient) AS benefice
 FROM exam_livraison l
-JOIN vue_prix_colis c ON c.date_livraison = l.date_livraison
+JOIN vue_prix_colis c ON c.id_livraison = l.id_livraison
 JOIN v_livraison_total_cout r ON r.id_livraison = l.id_livraison
-GROUP BY annee;
-
+GROUP BY YEAR(l.date_livraison);

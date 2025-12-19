@@ -8,6 +8,7 @@
                 <a href="/liste">Suivi des livraisons</a>
                 <a href="/form">Nouvelle Livraison</a>
                 <a href="/benef">Benefices</a>
+                 <a href="/zone">Zones</a>
             </nav>
         </div>
     </header>

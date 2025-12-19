@@ -69,6 +69,8 @@ $baseUrl = $app->get('flight.base_url');
     <div class="container-buttons">
         <a href="/form"><button class="btn-insert">Inserer une livraison</button></a>
         <a href="/benef"><button class="btn-stats">Benefices societe</button></a>
+        <a href="/zone"><button class="btn-stats" style="background-color:orange">Gerer les zones</button></a>
+        <a href="/deleteAll"><button class="btn-stats" style="background-color:red">TOUT EFFACER</button></a>
     </div>
     <?php include('footer.php')?>
 </body>

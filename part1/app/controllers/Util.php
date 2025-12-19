@@ -24,9 +24,6 @@ class Util{
         $vehicule = new Vehicule(Flight::db());
         return $liste_zone = $vehicule->getVehicules();
     }
-    
-
-
 }
 
 

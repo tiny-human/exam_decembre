@@ -4,6 +4,7 @@ namespace app\controllers;
 use DateTime;
 use app\models\Livraison;
 use app\models\Colis;
+use FFI;
 use Flight;
 
  class LivraisonController
@@ -21,7 +22,6 @@ use Flight;
             'recette' => $recette
         ]);
     }
-
     public function getLivraisonParId($id) {
     $db = Flight::db();
     $Livraison = new Livraison($db);
@@ -169,6 +169,16 @@ use Flight;
             echo "Livraison modifier avec succes";
         } catch (\Throwable $e) {
             echo "Erreur lors de la modification";
+        }
+    }
+    public function deleteAll(){
+        $code = $_POST['code'];
+        if($code == 9999){
+            $l = new Livraison(Flight::db());
+            $l->deleteALL();
+        }
+        else{
+            Flight::redirect('/deleteAll');
         }
     }
 }

@@ -129,5 +129,7 @@ General
                 (ok)getBeneficeParMois(mois,annee) 	}(dans livraisonController avec getBenef()) (par Tsiky) 
                 (ok)getBeneficeParAnnee(annee) 	}
 
+Partie 2 
+//===============================================================
 
-
+4)modification de la base de donnee

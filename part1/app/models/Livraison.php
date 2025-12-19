@@ -126,6 +126,11 @@ class Livraison
         $id_livraison
     ]);
 }
+     function deleteALL(){
+        $sql = "DELETE FROM  exam_livraison where 1=1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+    }
 
 }
 
