@@ -11,6 +11,7 @@ $baseUrl = $app->get('flight.base_url');
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
+    <?php include('header.php')?>
     <header class="main-navbar">
         <div class="nav-content">
             <a href="/liste" class="nav-logo">
@@ -18,7 +19,7 @@ $baseUrl = $app->get('flight.base_url');
                 Service de livraison
             </a>
             <nav class="nav-links">
-                <a href="/liste">Tableau de bord</a>
+                <a href="/liste">Suivi des livraisons</a>
                 <a href="/form">Nouvelle Livraison</a>
                 <a href="/benef">Bénéfices</a>
             </nav>
@@ -30,7 +31,7 @@ $baseUrl = $app->get('flight.base_url');
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>zone</th>
                 <th>Colis</th>
                 <th>Véhicule</th>
                 <th>Livreur</th>
@@ -38,12 +39,13 @@ $baseUrl = $app->get('flight.base_url');
                 <th>Chiffre d'affaire</th>
                 <th>Date</th>
                 <th>Statut</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($liste as $l) { ?>
                 <tr>
-                    <td><strong><?= $l['id_livraison'] ?></strong></td>
+                    <td><strong><?= $l['zone'] ?></strong></td>
                     <td><?= $l['colis'] ?></td>
                     <td><?= $l['vehicule'] ?></td>
                     <td><?= $l['livreur'] ?></td>
@@ -67,19 +69,20 @@ $baseUrl = $app->get('flight.base_url');
                     <td><?= $ca_val ?></td>
                     <td><?= $l['dates'] ?></td>
                     <td class="status-cell"><?= $l['statut'] ?></td>
+                    <td>
+                    <a href="/form_modification/<?= $l['id_livraison']?>" class="btn-submit" style="background-color: green; text-decoration: none;">
+                        Modifier
+                    </a>
+                </td>
                 </tr>
             <?php } ?>
         </tbody>
     </table>
+    <script></script>
     <div class="container-buttons">
         <a href="/form"><button class="btn-insert">Inserer une livraison</button></a>
         <a href="/benef"><button class="btn-stats">Benefices societe</button></a>
     </div>
-    <footer class="main-footer">
-    <p>&copy; <?= date('Y') ?> - Service de livraison Madagascar. Tous droits réservés (Neks et Tsiky).</p>
-    <p>Ariary (MGA)</p>
-</footer>
-
+    <?php include('footer.php')?>
 </body>
-
 </html>

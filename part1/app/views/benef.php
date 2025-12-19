@@ -7,20 +7,8 @@
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
-    <header class="main-navbar">
-        <div class="nav-content">
-            <a href="/liste" class="nav-logo">
-                <img src="/images/livraison-rapide.png" alt="" style="height: 30px;">
-                Service de livraison
-            </a>
-            <nav class="nav-links">
-                <a href="/liste">Tableau de bord</a>
-                <a href="/form">Nouvelle Livraison</a>
-                <a href="/benef">Benefices</a>
-            </nav>
-        </div>
-    </header>
-
+    <?php include('header.php')?>
+ 
     <div class="container">
         <h1 class="title-container">
             <span><?php echo $titre ?></span>
@@ -32,13 +20,13 @@
         <div class="form-filtre">
             <form method="POST" action="/benef">
                 <label for="jour">Jour :</label>
-                <input type="date" name="jour" id="jour" value="<?= htmlspecialchars($jour ?? '') ?>">
+                <input type="date" name="jour" id="jour" value="<?= ($jour ?? '') ?>">
 
                 <label for="mois">Mois :</label>
-                <input type="month" name="mois" id="mois" value="<?= htmlspecialchars($mois ?? '') ?>" placeholder="mois en francais">
+                <input type="month" name="mois" id="mois" value="<?= ($mois ?? '') ?>" placeholder="mois en francais">
 
                 <label for="annee">Annee :</label>
-                <input type="number" name="annee" id="annee" placeholder="Ex: 2025" value="<?= htmlspecialchars($annee ?? '') ?>">
+                <input type="number" name="annee" id="annee" placeholder="Ex: 2025" value="<?= ($annee ?? '') ?>">
 
                 <button type="submit">Afficher les benefices</button>
             </form>
@@ -47,7 +35,7 @@
 
         <?php if ($messageErreur): ?>
             <div class="erreur">
-                <?= htmlspecialchars($messageErreur) ?>
+                <?= ($messageErreur) ?>
             </div>
         <?php endif; ?>
 
@@ -68,14 +56,14 @@
                                     echo date('d/m/Y', strtotime($b['jour']));
                                 } elseif ($typeAffiche === 'mois') {
                                     if (isset($b['mois_annee'])) {
-                                        echo htmlspecialchars($b['mois_annee']);
+                                        echo ($b['mois_annee']);
                                     } elseif (isset($b['mois']) && isset($b['annee'])) {
-                                        echo htmlspecialchars($b['mois'] . ' ' . $b['annee']);
+                                        echo ($b['mois'] . ' ' . $b['annee']);
                                     } else {
                                         echo "Mois inconnu";
                                     }
                                 } elseif ($typeAffiche === 'annee') {
-                                    echo htmlspecialchars($b['annee']);
+                                    echo ($b['annee']);
                                 }
                                 ?>
                             </td>
@@ -90,10 +78,8 @@
             <a href="/liste"><button>Retour a la liste</button></a>
         </div>
     </div>
+    <?php include('footer.php')?>
 
-    <footer class="main-footer">
-        <p>&copy; <?= date('Y') ?> - Service de livraison Madagascar. Tous droits reserves (Neks et Tsiky).</p>
-        <p>Ariary (MGA)</p>
-    </footer>
+   
 </body>
 </html>

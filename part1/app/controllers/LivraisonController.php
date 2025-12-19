@@ -10,21 +10,23 @@ use Flight;
 {
     public function getLivraison() {
         $db = Flight::db();
-
         $Livraison = new Livraison($db);
         $Colis = new Colis($db);
-
-        $liste   = $Livraison->getLivraison();        // Liste des livraisons
-        $cout    = $Livraison->getCoutRevient();      // Coûts de revient par livraison
-        $recette = $Colis->getInfoColis();            // Données pour le chiffre d'affaires / recette
- 
+        $liste   = $Livraison->getLivraison();        
+        $cout    = $Livraison->getCoutRevient();     
+        $recette = $Colis->getInfoColis();      
         Flight::render('liste', [
             'liste'   => $liste,
             'cout'    => $cout,
             'recette' => $recette
         ]);
     }
-    
+    public function getLivraisonParId($id) {
+    $db = Flight::db();
+    $Livraison = new Livraison($db);
+    $liste   = $Livraison->getLivraisonParId($id);
+    return $liste;
+    }
     public function getBenef() {
         $db = Flight::db();
         $Livraison = new Livraison($db);
@@ -131,26 +133,42 @@ use Flight;
     }
 
     public function insererLivraison(){
-    $db = Flight::db();
-    $date = $_POST['date_livraison'];
-    $id_vehicule = $_POST['id_vehicule'];
-    $id_livreur = $_POST['id_livreur'];
-    $id_colis = $_POST['id_colis'] ?? '';
-    $addresse_depart = $_POST['adresse_depart'];
-    $zone = $_POST['id_zone'];
-    $statut = $_POST['id_statut'];
-    $cout_vehicule = $_POST['cout_vehicule'];
-    try {
-        $livraison = new Livraison($db);
-        $livraison->insertLivraison($date, $id_vehicule, $id_livreur, $id_colis, $addresse_depart, $zone, $statut, $cout_vehicule);
-        echo "Livraison inserer avec succes";
-    } catch (\Throwable $e) {
-        echo "Erreur lors de la creation";
+        $db = Flight::db();
+        $date = $_POST['date_livraison'];
+        $id_vehicule = $_POST['id_vehicule'];
+        $id_livreur = $_POST['id_livreur'];
+        $id_colis = $_POST['id_colis'] ?? '';
+        $addresse_depart = $_POST['adresse_depart'];
+        $zone = $_POST['id_zone'];
+        $statut = $_POST['id_statut'];
+        $cout_vehicule = $_POST['cout_vehicule'];
+        try {
+            $livraison = new Livraison($db);
+            $livraison->insertLivraison($date, $id_vehicule, $id_livreur, $id_colis, $addresse_depart, $zone, $statut, $cout_vehicule);
+            echo "Livraison inserer avec succes";
+        } catch (\Throwable $e) {
+            echo "Erreur lors de la creation";
+        }
     }
-}
-
-  
-
+        public function modifierLivraison(){
+        $db = Flight::db();
+        $id = $_POST['id_livraison'];
+        $date = $_POST['date_livraison'];
+        $id_vehicule = $_POST['id_vehicule'];
+        $id_livreur = $_POST['id_livreur'];
+        $id_colis = $_POST['id_colis'] ?? '';
+        $addresse_depart = $_POST['adresse_depart'];
+        $zone = $_POST['id_zone'];
+        $statut = $_POST['id_statut'];
+        $cout_vehicule = $_POST['cout_vehicule'];
+        try {
+            $livraison = new Livraison($db);
+            $livraison-> updateLivraison($id,$date, $id_vehicule, $id_livreur, $id_colis, $addresse_depart, $zone, $statut, $cout_vehicule);
+            echo "Livraison modifier avec succes";
+        } catch (\Throwable $e) {
+            echo "Erreur lors de la modification";
+        }
+    }
 }
 
 ?>]

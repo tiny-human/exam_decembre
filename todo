@@ -38,6 +38,7 @@ General
         fonction
 
         design
+            separer le footer et le header dans des fichiers 
             
         integration
             creation des models / controllers :
@@ -52,7 +53,6 @@ General
 
     _(ok)formulaire pour creer une livraison
         base    
-
         fonction
                (ok)insererLivraison() (par Nekena)
                (ok)getColis() (par Nekena)
@@ -76,6 +76,27 @@ General
                 (ok)appeler insererLivraison(), inserer les donnees recuperees via form (dans livraisonController) (par Nekena)
                 (ok)appeler getColis(),getStatut(),getVehicule(),getZone() (dans util) (par Nekena)
 
+    _(ok)formulaire pour modifier une livraison (Pre-rempli) et modifier
+        base    
+        fonction
+            meme  fonction que inserer (getColis,etc,..........)
+            fonction getLivraisonParId($id) (Par Nekena)
+            routes pour aller vers le formulaire (avec appel de getColis,getLivreur pour les listes deroulantes)
+        design
+            (ok)form + input: avec les valeurs avant modification(par Nekena)
+                colis (liste deroulante)
+                vehicule
+                date de livraison
+                livreur(liste deroulante)
+                addresse_depart(entrepot)
+                nom de zone(addresse_destination)
+                statut(liste deroulante)
+                cout du vehicule
+                +buton modifier
+                +input type hidden de l'id de la livraison a modifier
+        integration
+                (ok) Utilisation de ajax XHR pour la modification(par Nekena)
+                (ok)appeler updaterLivraison() avec les donnees recuperees via form (dans livraisonController) (par Nekena)
     (ok)_affichage des livraison
         base
             (ok)insertion des donnees de test pour chaque table (livraison,livreur,vehicule,statut,zone)(par Nekena )
