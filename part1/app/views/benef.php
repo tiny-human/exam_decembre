@@ -8,7 +8,6 @@
 </head>
 <body>
     <?php include('header.php')?>
- 
     <div class="container">
         <h1 class="title-container">
             <span><?php echo $titre ?></span>
@@ -87,7 +86,6 @@
                 </tbody>
             </table>
         <?php endif; ?>
-
         <div class="retour">
             <a href="/liste"><button>Retour a la liste</button></a>
         </div>
